@@ -12,11 +12,11 @@ Dockerized Jupyter + PySpark environment, designed to be used from IntelliJ IDEA
 podman compose up --build
 ```
 
-## Connect from IntelliJ
+## Connect from your IDE
 
-1. Open a `.ipynb` file in IntelliJ
-2. Click the kernel selector → **Add Jupyter Server** → **Configured Server**
-3. Enter `http://localhost:8888` — no token needed
+To connect from the IDE two things have to be configured:
+- Add a Jupyter server pointing to `http://localhost:8888` (runtime).
+- Configure the python interpreter to pick the one from inside the docker-compose.
 
 Notebooks are saved in the `notebooks/` folder on your machine.
 
@@ -25,5 +25,5 @@ Notebooks are saved in the `notebooks/` folder on your machine.
 Edit `pyproject.toml`, then rebuild:
 
 ```bash
-docker compose up --build
+podman compose up --build
 ```
