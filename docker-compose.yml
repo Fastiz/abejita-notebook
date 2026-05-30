@@ -1,7 +1,25 @@
 services:
+  mariadb:
+    image: docker.io/library/mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: mydb
+      MARIADB_USER: spark
+      MARIADB_PASSWORD: sparkpassword
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d  # place your dump .sql file(s) in the initdb/ directory
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   notebook:
     build: .
     ports:
       - "8888:8888"
     volumes:
       - ./notebooks:/app/notebooks
+    depends_on:
+      mariadb:
+        condition: service_healthy
