@@ -1,13 +1,13 @@
 services:
   mariadb:
-    image: docker.io/library/mariadb:11
+    image: docker.io/library/mariadb:10.6
     environment:
       MARIADB_ROOT_PASSWORD: rootpassword
       MARIADB_DATABASE: mydb
       MARIADB_USER: spark
       MARIADB_PASSWORD: sparkpassword
     volumes:
-      - ./initdb:/docker-entrypoint-initdb.d  # place your dump .sql file(s) in the initdb/ directory
+      - ./initdb:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
     healthcheck:
@@ -22,6 +22,7 @@ services:
       - "8888:8888"
     volumes:
       - ./notebooks:/app/notebooks
+      - ./data:/app/data
     depends_on:
       mariadb:
         condition: service_healthy
